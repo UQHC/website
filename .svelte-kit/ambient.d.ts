@@ -60,6 +60,7 @@ declare module '$env/static/private' {
 	export const COMMAND_MODE: string;
 	export const SSH_AUTH_SOCK: string;
 	export const __CF_USER_TEXT_ENCODING: string;
+	export const npm_package_devDependencies_postcss: string;
 	export const npm_package_devDependencies_eslint: string;
 	export const npm_execpath: string;
 	export const npm_package_devDependencies_tslib: string;
@@ -74,6 +75,7 @@ declare module '$env/static/private' {
 	export const LaunchInstanceID: string;
 	export const __CFBundleIdentifier: string;
 	export const PWD: string;
+	export const npm_package_devDependencies_tailwindcss: string;
 	export const npm_package_scripts_preview: string;
 	export const npm_lifecycle_event: string;
 	export const LANG: string;
@@ -89,6 +91,7 @@ declare module '$env/static/private' {
 	export const npm_package_devDependencies__sveltejs_adapter_auto: string;
 	export const npm_package_version: string;
 	export const npm_package_devDependencies_svelte_check: string;
+	export const npm_package_devDependencies_autoprefixer: string;
 	export const SHLVL: string;
 	export const HOME: string;
 	export const COLORFGBG: string;
@@ -184,6 +187,7 @@ declare module '$env/dynamic/private' {
 		COMMAND_MODE: string;
 		SSH_AUTH_SOCK: string;
 		__CF_USER_TEXT_ENCODING: string;
+		npm_package_devDependencies_postcss: string;
 		npm_package_devDependencies_eslint: string;
 		npm_execpath: string;
 		npm_package_devDependencies_tslib: string;
@@ -198,6 +202,7 @@ declare module '$env/dynamic/private' {
 		LaunchInstanceID: string;
 		__CFBundleIdentifier: string;
 		PWD: string;
+		npm_package_devDependencies_tailwindcss: string;
 		npm_package_scripts_preview: string;
 		npm_lifecycle_event: string;
 		LANG: string;
@@ -213,6 +218,7 @@ declare module '$env/dynamic/private' {
 		npm_package_devDependencies__sveltejs_adapter_auto: string;
 		npm_package_version: string;
 		npm_package_devDependencies_svelte_check: string;
+		npm_package_devDependencies_autoprefixer: string;
 		SHLVL: string;
 		HOME: string;
 		COLORFGBG: string;

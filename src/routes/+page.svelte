@@ -1,12 +1,39 @@
-<script>
+<script lang="ts">
   import Card from "../components/Card/Card.svelte";
-
   const archesImg = "assets/arches.jpg";
   const automationIcon = "icons/icons8-automation.svg";
   const temperatureIcon = "icons/icons8-temperature.svg";
   const fanIcon = "icons/icons8-fan.svg";
   const toolsIcon = "icons/icons8-tools.svg";
   const gearsIcon = "icons/icons8-gears.svg";
+
+  const handleClick = async () => {
+    // validate email values before sending it to the api
+    const emailRequest = {
+      personalizations: [
+        {
+          to: [{ email: "Utahqualityheatingcooling@gmail.com" }],
+          subject: "Hello from React and SendGrid",
+        },
+      ],
+      from: { email: "Utahqualityheatingcooling@gmail.com" },
+      content: [
+        {
+          type: "text/plain",
+          value: "This is a test email sent from a Svelte app using SendGrid!",
+        },
+      ],
+    };
+    // Add validations
+    const response = await fetch("/api/email", {
+      method: "POST",
+      body: JSON.stringify({ emailRequest }),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    console.log("response", await response.json());
+  };
 </script>
 
 <div class="min-h-screen bg-slate-700">
@@ -20,6 +47,7 @@
       class="absolute top-0 left-0 w-full h-full bg-slate-300 opacity-50 z-10"
     />
     <div class="absolute top-0 left-0 w-full h-full z-20">
+      <button on:click={handleClick}>Button!!</button>
       <!-- section -->
       <div class="p-4 md:p-24">
         <div class="w-full md:w-1/2 space-y-2">

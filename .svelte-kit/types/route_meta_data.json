@@ -1,0 +1,7 @@
+{
+	"/": [],
+	"/about": [],
+	"/api/email": [
+		"src/routes/api/email/+server.ts"
+	]
+}

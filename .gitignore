@@ -1,2 +1,11 @@
+# Files
+.git
 node_modules
 .env
+.svelte-kit
+build
+yarn-error.log
+
+
+# Binaries
+DS_Store

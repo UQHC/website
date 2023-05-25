@@ -1,25 +1,20 @@
-export interface EmailAddress {
-  email: string;
-}
-
-export interface Personalization {
-  to: EmailAddress[];
-  subject: string;
-}
-
-export interface From {
-  email: string;
-}
-
-export interface Content {
-  type: 'text/plain' | 'text/html';
-  value: string;
-}
-
 export interface EmailRequest {
-  personalizations: Personalization[],
+  to: string
   templateId: string,
   subject: string,
   from: From,
+  dynamicTemplateData: Email,
 };
+
+export interface Email {
+  email: string,
+  firstName: string,
+  lastName: string,
+  message: string,
+  phone: string,
+};
+
+interface From {
+  email: string
+}
 

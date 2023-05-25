@@ -9,8 +9,11 @@ export const POST = (async ({ request }) => {
   const mail = new SendGrid(emailRequest)
   const response = await mail.sendemail();
 
-  // TODO: return an success response using json like so: json(body: {status: 'success', code: 'statusCodeNum'})
+  console.log(response)
+
   return json({ response });
+
+  // TODO: return an success response using json like so: json(body: {status: 'success', code: 'statusCodeNum'})
 
 
 }) satisfies RequestHandler;

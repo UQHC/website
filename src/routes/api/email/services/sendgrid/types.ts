@@ -18,7 +18,8 @@ export interface Content {
 
 export interface EmailRequest {
   personalizations: Personalization[],
-  content: Content[],
+  templateId: string,
+  subject: string,
   from: From,
 };
 

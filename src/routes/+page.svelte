@@ -1,31 +1,34 @@
 <script lang="ts">
   import Card from "../components/Card/Card.svelte";
   const archesImg = "assets/arches.jpg";
+  const area = "assets/selectedAreas.jpg";
+  const imagePath = `${area}`;
   const automationIcon = "icons/icons8-automation.svg";
   const temperatureIcon = "icons/icons8-temperature.svg";
   const fanIcon = "icons/icons8-fan.svg";
   const toolsIcon = "icons/icons8-tools.svg";
   const gearsIcon = "icons/icons8-gears.svg";
 
+  let email = {
+    email: "",
+    firstName: "",
+    lastName: "",
+    message: "",
+    phone: "",
+  };
+
   // TODO: Implement in a form
-  const handleClick = async () => {
+  const sendEmail = async () => {
     // validate email values before sending it to the api
     const emailRequest = {
-      personalizations: [
-        {
-          to: [{ email: "Utahqualityheatingcooling@gmail.com" }],
-          subject: "Hello from React and SendGrid",
-        },
-      ],
+      to: "gracias.claude@gmail.com",
+      subject: "New Client Information",
+      dynamicTemplateData: email,
       from: { email: "Utahqualityheatingcooling@gmail.com" },
-      content: [
-        {
-          type: "text/plain",
-          value: "This is a test email sent from a Svelte app using SendGrid!",
-        },
-      ],
+      templateId: "d-5a768942a9f441aa87c502a9f81a1e7a",
     };
     // Add validations
+    // "Utahqualityheatingcooling@gmail.com"
     const response = await fetch("/api/email", {
       method: "POST",
       body: JSON.stringify({ emailRequest }),
@@ -83,8 +86,99 @@
       </div>
     </div>
   </div>
-  <div class="flex justify-center p-40">
-    <p class="text-4xl text-white">Coming Soon......</p>
+  <div
+    id="contact-section"
+    class="bg-white md:min-h-screen flex flex-col md:flex-row"
+  >
+    <div
+      class="w-full md:w-1/2 px-4 py-8 md:py-16 flex flex-col justify-center items-center"
+    >
+      <div class="mb-5 text-center">
+        <h1 class="text-2xl font-bold mb-">Contact Us</h1>
+        <p class="text-gray-500 mb-6 text-center">
+          We are ready to work for you
+        </p>
+      </div>
+      <form class="max-w-md mx-auto">
+        <div class="mb-4 flex">
+          <div class="w-1/2 mr-2">
+            <label
+              for="first-name"
+              class=" block text-sm font-medium text-gray-700">First Name</label
+            >
+            <input
+              type="text"
+              id="first-name"
+              bind:value={email.firstName}
+              name="first-name"
+              class="outline-blue-500 focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
+            />
+          </div>
+          <div class="w-1/2 ml-2">
+            <label
+              for="last-name"
+              class="block text-sm font-medium text-gray-700">Last Name</label
+            >
+            <input
+              type="text"
+              bind:value={email.lastName}
+              id="last-name"
+              name="last-name"
+              class="border-2 border-gray-100 mt-1 p-2 form-outline block w-full shadow-sm sm:text-sm rounded-md focus:ring-orange-500 focus:border-orange-500"
+            />
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700"
+            >Email</label
+          >
+          <input
+            type="email"
+            bind:value={email.email}
+            id="email"
+            name="email"
+            class="border-2 border-gray-100 mt-1 p-2 form-outline block w-full shadow-sm sm:text-sm rounded-md focus:ring-orange-500 focus:border-orange-500"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="phone" class="block text-sm font-medium text-gray-700"
+            >Phone Number</label
+          >
+          <input
+            type="tel"
+            bind:value={email.phone}
+            id="phone"
+            name="phone"
+            class="border-2 border-gray-100 mt-1 p-2 form-outline block w-full shadow-sm sm:text-sm rounded-md focus:ring-orange-500 focus:border-orange-500"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="message" class="block text-sm font-medium text-gray-700"
+            >Message</label
+          >
+          <textarea
+            id="message"
+            bind:value={email.message}
+            name="message"
+            rows="4"
+            class="border-2 border-gray-100 mt-1 p-2 form-outline block w-full shadow-sm sm:text-sm rounded-md focus:ring-orange-500 focus:border-orange-500"
+          />
+        </div>
+        <div class="mb-4">
+          <button
+            on:click={() => sendEmail()}
+            type="submit"
+            class="w-full flex justify-center py-2 px-4 bg-gray-700 hover:bg-orange-600 focus:ring-orange-500 focus:ring-offset-orange-200 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200"
+            >Submit</button
+          >
+        </div>
+      </form>
+    </div>
+
+    <div
+      class="w-full md:w-1/2 bg-cover bg-center"
+      style="background-image: url({imagePath});"
+    />
   </div>
   <div />
 </div>

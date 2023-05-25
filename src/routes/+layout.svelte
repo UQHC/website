@@ -1,10 +1,23 @@
-<script>
+<script lang="ts">
   import "../app.css";
   let isMenuOpen = false;
+
   const logo = "assets/_logo exports/white/svg/UQHC_Logo_Horizontal_White.svg";
 
   const handleOpenMenu = () => {
     isMenuOpen = !isMenuOpen;
+  };
+  const closeMobileMenu = () => {
+    isMenuOpen = false;
+  };
+  const scrollToSection = (selector: string, scrollTop: number) => {
+    const section = document.querySelector(selector);
+    if (section) {
+      window.scrollTo({
+        top: section.clientTop + scrollTop,
+        left: 0,
+      });
+    }
   };
 </script>
 
@@ -15,16 +28,20 @@
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center">
             <div class="flex-shrink-0">
-              <img
-                class="block h-12 w-auto lg:hidden"
-                src={logo}
-                alt="Your Company"
-              />
-              <img
-                class="hidden h-12 w-auto lg:block"
-                src={logo}
-                alt="Your Company"
-              />
+              <a href="/">
+                <img
+                  class="block h-12 w-auto lg:hidden"
+                  src={logo}
+                  alt="Utah Quality Heating and Cooling"
+                />
+              </a>
+              <a href="/">
+                <img
+                  class="hidden h-12 w-auto lg:block"
+                  src={logo}
+                  alt="Utah Quality Heating and Cooling"
+                />
+              </a>
             </div>
             <div class="hidden sm:ml-6 sm:block" />
           </div>
@@ -32,25 +49,35 @@
             <div class="flex items-center">
               <div class="flex space-x-4">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a
-                  href="#"
+                <button
                   class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                  >Home</a
+                  >Home</button
                 >
-                <a
-                  href=""
+                <button
+                  on:click={() => {
+                    scrollToSection("#contact-section", 1100);
+                    closeMobileMenu();
+                  }}
                   class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                  >Contact</a
+                  >Contact</button
                 >
-                <a
+                <button
+                  on:click={() => {
+                    scrollToSection("#contact-section", 1100);
+                    closeMobileMenu();
+                  }}
+                  class="bg-orange-500 rounded-md px-3 py-2 text-sm font-medium text-white"
+                  >Get Started</button
+                >
+                <!-- <a
                   href="#"
                   class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                   >About</a
-                >
+                > -->
                 <a
-                  href="#"
+                  href="tel:+18016882612"
                   class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                  >111-111-1111</a
+                  >(801)-688-2612</a
                 >
               </div>
               <!-- Profile dropdown -->
@@ -67,8 +94,8 @@
             -->
                 <!-- Active: "bg-gray-100", Not Active: "" -->
                 <!--
-            <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
               <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+<div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
               <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
               <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
             </div>
@@ -144,28 +171,44 @@
       <!-- Mobile menu, show/hide based on menu state. -->
       {#if isMenuOpen}
         <div class="sm:hidden" id="mobile-menu">
-          <div class="space-y-1 px-2 pb-3 pt-2">
+          <div class="space-y-1 grid justify-start px-2 pb-3 pt-3">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a
-              href="#"
-              class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-              >Home</a
+            <button class="grid">
+              <a
+                href="#"
+                class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+                >Home</a
+              >
+            </button>
+            <button
+              on:click={() => {
+                scrollToSection("#contact-section", 900);
+                closeMobileMenu();
+              }}
+              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >Contact</button
             >
-            <a
-              href="#"
-              class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >Contact</a
-            >
-            <a
-              href="#"
-              class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >About</a
-            >
-            <a
-              href="#"
-              class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >111-111-1111</a
-            >
+            <button>
+              <a
+                class=" block bg-orange-500 rounded-md px-3 py-2 text-base font-medium text-gray-300"
+              >
+                <button
+                  on:click={() => {
+                    scrollToSection("#contact-section", 900);
+                    closeMobileMenu();
+                  }}
+                >
+                  Get Started
+                </button>
+              </a>
+            </button>
+            <button>
+              <a
+                href="tel:+18016882612"
+                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >(801)-668-2612</a
+              >
+            </button>
           </div>
           <!--
       <div class="mt-3 space-y-1 px-2">
@@ -185,15 +228,17 @@
       <div class="flex flex-wrap justify-between items-center">
         <div class="w-full md:w-auto mb-4 md:mb-0">
           <h2 class="font-bold text-xl mb-2">Utah Quality Heating & Cooling</h2>
-          <p>123 Main Street, Salt Lake City, UT 84101</p>
-          <p>Phone: (123) 456-7890</p>
+          <a href="tel:+18016882612">Phone: (801) 688-2612</a>
         </div>
         <nav class="w-full md:w-auto">
           <ul class="flex flex-col md:flex-row md:space-x-4">
+            <!--
             <li><a href="#" class="hover:text-gray-300">Home</a></li>
             <li><a href="#" class="hover:text-gray-300">Services</a></li>
-            <li><a href="#" class="hover:text-gray-300">About</a></li>
+ -->
+            <!--  <li><a href="#" class="hover:text-gray-300">About</a></li>
             <li><a href="#" class="hover:text-gray-300">Contact</a></li>
+              -->
           </ul>
         </nav>
       </div>
@@ -209,5 +254,10 @@
 <style lang="postcss">
   :global(html) {
     background-color: theme(colors.gray.100);
+  }
+  .a-no-style {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: pointer;
   }
 </style>

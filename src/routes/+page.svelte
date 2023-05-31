@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Card from "../components/Card/Card.svelte";
+  import Card from "../components/simple/Card/Card.svelte";
   import { Assets } from "../utility/staticHelper";
   import type {
     EmailRequest,
@@ -11,7 +11,7 @@
   const { arches, area } = Assets.image;
   const { temperature, fan, tools, gears } = Assets.icons;
 
-  let email: Email = {
+  const email: Email = {
     email: "",
     firstName: "",
     lastName: "",
@@ -19,10 +19,7 @@
     phone: "",
   };
 
-  // TODO: Implement in a form
   const sendEmail = async () => {
-    // validate email values before sending it to the api
-    // TODO: hide the emails
     const emailRequest: EmailRequest = {
       to: VITE_UQHC_EMAIL as string,
       subject: "New Client Information",

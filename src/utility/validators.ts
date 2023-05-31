@@ -1,5 +1,6 @@
 import type { Email } from "../routes/api/email/services/sendgrid/types";
 
+//TODO: add unit tests for this validator function
 export const validateEmail = (email: Email): boolean => {
   const validateFields = Object.values(email).every(
     attribute => attribute !== undefined && attribute !== null && attribute

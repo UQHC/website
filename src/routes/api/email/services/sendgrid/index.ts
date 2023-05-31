@@ -10,7 +10,6 @@ export class SendGrid {
   SENDGRID_API_URL = process.env.VITE_SENDGRID_API_URL || '';
 
   constructor(msg: EmailRequest) {
-    // set up the api keys
     this.Sendgrid = sendgrid.setApiKey(this.SENDGRID_API_KEY);
     this.message = msg
   }

@@ -6,8 +6,9 @@ import { validateEmail } from '../../../utility/validators'
 export const POST = (async ({ request }) => {
   try {
     const { emailRequest } = await request.json();
+    const { dynamicTemplateData: email } = emailRequest;
 
-    if (!validateEmail(emailRequest)) {
+    if (!validateEmail(email)) {
       throw new Error(errors.missingFields)
     }
     const mail = new SendGrid(emailRequest)

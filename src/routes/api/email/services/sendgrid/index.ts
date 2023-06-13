@@ -10,13 +10,16 @@ export class SendGrid {
   SENDGRID_API_URL = process.env.VITE_SENDGRID_API_URL || '';
 
   constructor(msg: EmailRequest) {
+    // set up the api keys
+    // set up the api keys
     this.Sendgrid = sendgrid.setApiKey(this.SENDGRID_API_KEY);
-    this.message = msg
+    this.message = msg;
   }
 
   async sendEmail() {
     try {
       const response = await this.Sendgrid.send(this.message);
+      console.log(response)
 
       if (response.ok) {
         console.log('Email sent successfully');

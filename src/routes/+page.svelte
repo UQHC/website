@@ -29,9 +29,8 @@
       },
       templateId: VITE_SENDGRID_TEMPLATE_ID as string,
     };
-
     const isValidated = validateEmail(email);
-
+    console.log("isvalidated", isValidated);
     if (isValidated) {
       try {
         const response = await fetch("/api/email", {

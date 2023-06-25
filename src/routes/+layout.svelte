@@ -171,7 +171,7 @@
       <!-- Mobile menu, show/hide based on menu state. -->
       {#if isMenuOpen}
         <div class="sm:hidden" id="mobile-menu">
-          <div class="space-y-1 grid justify-start px-2 pb-3 pt-3">
+          <div class="grid justify-start px-4 pt-3 pb-3">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <button class="grid">
               <a

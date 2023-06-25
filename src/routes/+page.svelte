@@ -1,15 +1,17 @@
 <script lang="ts">
-  import Card from "../components/Card/Card.svelte";
-  const archesImg = "assets/arches.jpg";
-  const area = "assets/selectedAreas.jpg";
-  const imagePath = `${area}`;
-  const automationIcon = "icons/icons8-automation.svg";
-  const temperatureIcon = "icons/icons8-temperature.svg";
-  const fanIcon = "icons/icons8-fan.svg";
-  const toolsIcon = "icons/icons8-tools.svg";
-  const gearsIcon = "icons/icons8-gears.svg";
+  import Card from "../components/simple/Card/Card.svelte";
+  import { Assets } from "../utility/staticHelper";
+  import type {
+    EmailRequest,
+    Email,
+  } from "./api/email/services/sendgrid/types";
+  import { validateEmail } from "../utility/validators";
 
-  let email = {
+  const { VITE_UQHC_EMAIL, VITE_SENDGRID_TEMPLATE_ID } = import.meta.env;
+  const { arches, area } = Assets.image;
+  const { temperature, fan, tools, gears } = Assets.icons;
+
+  const email: Email = {
     email: "",
     firstName: "",
     lastName: "",
@@ -17,33 +19,42 @@
     phone: "",
   };
 
-  // TODO: Implement in a form
   const sendEmail = async () => {
-    // validate email values before sending it to the api
-    const emailRequest = {
-      to: "gracias.claude@gmail.com",
+    const emailRequest: EmailRequest = {
+      to: VITE_UQHC_EMAIL as string,
       subject: "New Client Information",
       dynamicTemplateData: email,
-      from: { email: "Utahqualityheatingcooling@gmail.com" },
-      templateId: "d-5a768942a9f441aa87c502a9f81a1e7a",
-    };
-    // Add validations
-    // "Utahqualityheatingcooling@gmail.com"
-    const response = await fetch("/api/email", {
-      method: "POST",
-      body: JSON.stringify({ emailRequest }),
-      headers: {
-        "content-type": "application/json",
+      from: {
+        email: VITE_UQHC_EMAIL as string,
       },
-    });
-    console.log("response", await response.json());
+      templateId: VITE_SENDGRID_TEMPLATE_ID as string,
+    };
+    const isValidated = validateEmail(email);
+    console.log("isvalidated", isValidated);
+    if (isValidated) {
+      try {
+        const response = await fetch("/api/email", {
+          method: "POST",
+          body: JSON.stringify({ emailRequest }),
+          headers: {
+            "content-type": "application/json",
+          },
+        });
+
+        //TODO: show a toast that the request has been success
+      } catch (err) {
+        //TODO: show a toast that the request has been error
+        console.log(err);
+      }
+      //TODO: default don't send anything --- or missing field
+    }
   };
 </script>
 
 <div class="min-h-screen bg-slate-700">
   <div class="relative">
     <img
-      src={archesImg}
+      src={arches}
       class="w-full object-cover h-screen md:h-full"
       alt="Utah Arches Image"
     />
@@ -77,10 +88,10 @@
           <div
             class="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:flex items-center justify-center"
           >
-            <Card text={"Ventalation"} icon={fanIcon} />
-            <Card text={"Expert Installion"} icon={gearsIcon} />
-            <Card text={"Inspection & Repairs"} icon={toolsIcon} />
-            <Card text={"Temperature Control"} icon={temperatureIcon} />
+            <Card text={"Ventalation"} icon={fan} />
+            <Card text={"Expert Installion"} icon={gears} />
+            <Card text={"Inspection & Repairs"} icon={tools} />
+            <Card text={"Temperature Control"} icon={temperature} />
           </div>
         </div>
       </div>
@@ -111,7 +122,7 @@
               id="first-name"
               bind:value={email.firstName}
               name="first-name"
-              class="outline-blue-500 focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
+              class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
             />
           </div>
           <div class="w-1/2 ml-2">
@@ -124,7 +135,7 @@
               bind:value={email.lastName}
               id="last-name"
               name="last-name"
-              class="border-2 border-gray-100 mt-1 p-2 form-outline block w-full shadow-sm sm:text-sm rounded-md focus:ring-orange-500 focus:border-orange-500"
+              class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
             />
           </div>
         </div>
@@ -137,7 +148,7 @@
             bind:value={email.email}
             id="email"
             name="email"
-            class="border-2 border-gray-100 mt-1 p-2 form-outline block w-full shadow-sm sm:text-sm rounded-md focus:ring-orange-500 focus:border-orange-500"
+            class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
           />
         </div>
         <div class="mb-4">
@@ -149,7 +160,7 @@
             bind:value={email.phone}
             id="phone"
             name="phone"
-            class="border-2 border-gray-100 mt-1 p-2 form-outline block w-full shadow-sm sm:text-sm rounded-md focus:ring-orange-500 focus:border-orange-500"
+            class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
           />
         </div>
         <div class="mb-4">
@@ -161,14 +172,14 @@
             bind:value={email.message}
             name="message"
             rows="4"
-            class="border-2 border-gray-100 mt-1 p-2 form-outline block w-full shadow-sm sm:text-sm rounded-md focus:ring-orange-500 focus:border-orange-500"
+            class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
           />
         </div>
         <div class="mb-4">
           <button
             on:click={() => sendEmail()}
             type="submit"
-            class="w-full flex justify-center py-2 px-4 bg-gray-700 hover:bg-orange-600 focus:ring-orange-500 focus:ring-offset-orange-200 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200"
+            class="w-full flex justify-center py-2 px-4 bg-gray-700 hover:bg-orange-400 focus:ring-orange-500 focus:ring-offset-orange-200 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200"
             >Submit</button
           >
         </div>
@@ -177,7 +188,7 @@
 
     <div
       class="w-full md:w-1/2 bg-cover bg-center"
-      style="background-image: url({imagePath});"
+      style="background-image: url({area});"
     />
   </div>
   <div />

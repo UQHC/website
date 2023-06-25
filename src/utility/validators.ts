@@ -27,8 +27,6 @@ export const validateEmail = (email: Email): boolean => {
 const validatePhone = (phone: string): boolean => {
   const phoneNumeric = Number(phone);
   const phoneLength = phone.length;
-  console.log(phoneLength, !isNaN(phoneNumeric))
-
   if ((phoneLength === 11 || phoneLength === 10) && !isNaN(phoneNumeric)) {
     return true
   }

@@ -19,7 +19,6 @@ export class SendGrid {
   async sendEmail() {
     try {
       const response = await this.Sendgrid.send(this.message);
-      console.log(response)
 
       if (response.ok) {
         console.log('Email sent successfully');

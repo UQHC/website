@@ -5,9 +5,11 @@
   const { orangePegIcon, facebook, instagram, twitter } = Assets.icons;
 </script>
 
-<div class="font-oswald">
+<div class="font-oswald max-h-screen bg-black">
   <slot />
-  <footer class="w-full foot-bg text-white py-6 font-bold md:text-xl">
+  <footer
+    class="foot-bg text-white py-6 min-h-fit font-bold bottom-0 w-full md:text-xl"
+  >
     <div class="md:flex p-9 grid justify-center">
       <div class="md:w-1/2">
         <div class="grid justify-center w-full md:w-auto mb-4 md:mb-0">
@@ -18,18 +20,7 @@
           />
         </div>
       </div>
-      <!--
-        <nav class="w-full md:w-auto">
-          <ul class="flex flex-col md:flex-row md:space-x-4">
-            <!--
-            <li><a href="#" class="hover:text-gray-300">Home</a></li>
-            <li><a href="#" class="hover:text-gray-300">Services</a></li>
- -->
-      <!--  <li><a href="#" class="hover:text-gray-300">About</a></li>
-            <li><a href="#" class="hover:text-gray-300">Contact</a></li>
-          </ul>
-        </nav>
-        -->
+
       <div
         class="md:w-1/2 mt-4 md:mt-0 text-center md:text-right md:text-xl text-sm"
       >
@@ -95,13 +86,5 @@
   .foot-bg {
     color: #ff6427;
     background-color: #660000;
-  }
-  @font-face {
-    font-family: "Oswald";
-    src: url("/path-to-your-font/Oswald-Medium.woff2") format("woff2"),
-      url("/path-to-your-font/Oswald-Medium.woff") format("woff");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
   }
 </style>

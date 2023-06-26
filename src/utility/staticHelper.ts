@@ -12,6 +12,7 @@ export const Assets = {
     facebook: "icons/icons8-fb.svg",
     twitter: "icons/icons8-tw.svg",
     instagram: "icons/icons8-ig.svg",
-    orangePegIcon: "assets/FooterLogoOrange.svg",
+    orangePegIcon: "icons/FooterLogoOrange.svg",
+    colorLogoLg: "icons/uqhc-color-lg.svg"
   },
 }

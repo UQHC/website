@@ -2,7 +2,6 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from '@sveltejs/kit';
 import { SendGrid } from './services/sendgrid/index';
 import { validateEmail } from '../../../utility/validators'
-
 export const POST = (async ({ request }) => {
   try {
     const { emailRequest } = await request.json();
@@ -21,8 +20,6 @@ export const POST = (async ({ request }) => {
     });
   } catch (err) {
     //TODO: figure out what status code to return in the json
-    console.log(err)
-
     return json({
       response: err,
       status: "fail",

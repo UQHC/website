@@ -1,23 +1,28 @@
 <script lang="ts">
   import Card from "../components/simple/Card/Card.svelte";
   import { Assets } from "../utility/staticHelper";
+  import { SvelteToast } from "@zerodevx/svelte-toast";
   import type {
     EmailRequest,
     Email,
   } from "./api/email/services/sendgrid/types";
   import { validateEmail } from "../utility/validators";
+  import { success, warning } from "../utility/toast-theme";
 
   const { VITE_UQHC_EMAIL, VITE_SENDGRID_TEMPLATE_ID } = import.meta.env;
   const { arches, area } = Assets.image;
   const { temperature, fan, tools, gears } = Assets.icons;
 
-  const email: Email = {
+  let email: Email = {
     email: "",
     firstName: "",
     lastName: "",
     message: "",
     phone: "",
   };
+
+  let emailSent = false;
+  const initialEmail = { ...email };
 
   const sendEmail = async () => {
     const emailRequest: EmailRequest = {
@@ -29,8 +34,9 @@
       },
       templateId: VITE_SENDGRID_TEMPLATE_ID as string,
     };
+
     const isValidated = validateEmail(email);
-    console.log("isvalidated", isValidated);
+
     if (isValidated) {
       try {
         const response = await fetch("/api/email", {
@@ -40,10 +46,15 @@
             "content-type": "application/json",
           },
         });
-
         //TODO: show a toast that the request has been success
+        if (response.ok) {
+          success("Email sent successfully");
+          emailSent = true;
+          // TODO: Change the form to email sent with a button that says send again
+        }
       } catch (err) {
         //TODO: show a toast that the request has been error
+        warning("Error sending email");
         console.log(err);
       }
       //TODO: default don't send anything --- or missing field
@@ -53,6 +64,9 @@
 
 <div class="min-h-screen bg-slate-700">
   <div class="relative">
+    <div class="toast-container">
+      <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
+    </div>
     <img
       src={arches}
       class="w-full object-cover h-screen md:h-full"
@@ -110,80 +124,92 @@
           We are ready to work for you
         </p>
       </div>
-      <form class="max-w-md mx-auto">
-        <div class="mb-4 flex">
-          <div class="w-1/2 mr-2">
-            <label
-              for="first-name"
-              class=" block text-sm font-medium text-gray-700">First Name</label
+      {#if !emailSent}
+        <form class="max-w-md mx-auto">
+          <div class="mb-4 flex">
+            <div class="w-1/2 mr-2">
+              <label
+                for="first-name"
+                class=" block text-sm font-medium text-gray-700"
+                >First Name</label
+              >
+              <input
+                type="text"
+                id="first-name"
+                bind:value={email.firstName}
+                name="first-name"
+                class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
+              />
+            </div>
+            <div class="w-1/2 ml-2">
+              <label
+                for="last-name"
+                class="block text-sm font-medium text-gray-700">Last Name</label
+              >
+              <input
+                type="text"
+                bind:value={email.lastName}
+                id="last-name"
+                name="last-name"
+                class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
+              />
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700"
+              >Email</label
             >
             <input
-              type="text"
-              id="first-name"
-              bind:value={email.firstName}
-              name="first-name"
+              type="email"
+              bind:value={email.email}
+              id="email"
+              name="email"
               class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
             />
           </div>
-          <div class="w-1/2 ml-2">
-            <label
-              for="last-name"
-              class="block text-sm font-medium text-gray-700">Last Name</label
+          <div class="mb-4">
+            <label for="phone" class="block text-sm font-medium text-gray-700"
+              >Phone Number</label
             >
             <input
-              type="text"
-              bind:value={email.lastName}
-              id="last-name"
-              name="last-name"
+              type="tel"
+              bind:value={email.phone}
+              id="phone"
+              name="phone"
               class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
             />
           </div>
-        </div>
-        <div class="mb-4">
-          <label for="email" class="block text-sm font-medium text-gray-700"
-            >Email</label
-          >
-          <input
-            type="email"
-            bind:value={email.email}
-            id="email"
-            name="email"
-            class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="phone" class="block text-sm font-medium text-gray-700"
-            >Phone Number</label
-          >
-          <input
-            type="tel"
-            bind:value={email.phone}
-            id="phone"
-            name="phone"
-            class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="message" class="block text-sm font-medium text-gray-700"
-            >Message</label
-          >
-          <textarea
-            id="message"
-            bind:value={email.message}
-            name="message"
-            rows="4"
-            class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
-          />
-        </div>
-        <div class="mb-4">
-          <button
-            on:click={() => sendEmail()}
-            type="submit"
-            class="w-full flex justify-center py-2 px-4 bg-gray-700 hover:bg-orange-400 focus:ring-orange-500 focus:ring-offset-orange-200 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200"
-            >Submit</button
-          >
-        </div>
-      </form>
+          <div class="mb-4">
+            <label for="message" class="block text-sm font-medium text-gray-700"
+              >Message</label
+            >
+            <textarea
+              id="message"
+              bind:value={email.message}
+              name="message"
+              rows="4"
+              class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
+            />
+          </div>
+          <div class="mb-4">
+            <button
+              on:click={() => sendEmail()}
+              type="submit"
+              class="w-full flex justify-center py-2 px-4 bg-gray-700 hover:bg-orange-400 focus:ring-orange-500 focus:ring-offset-orange-200 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200"
+              >Submit</button
+            >
+          </div>
+        </form>
+      {:else}
+        <button
+          on:click={() => {
+            emailSent = false;
+            email = initialEmail;
+          }}
+          class="grid justify-center py-2 px-4 bg-gray-700 hover:bg-orange-400 focus:ring-orange-500 focus:ring-offset-orange-200 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200"
+          >Send Again</button
+        >
+      {/if}
     </div>
 
     <div
@@ -193,3 +219,13 @@
   </div>
   <div />
 </div>
+
+<style>
+  :root {
+    --toastContainerTop: auto;
+    --toastContainerRight: 5px;
+    --toastContainerBottom: 20px;
+    --toastContainerLeft: auto;
+    --toastContainerPosition: fixed;
+  }
+</style>

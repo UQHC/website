@@ -62,7 +62,7 @@
   };
 </script>
 
-<div class="md:pt-24 md:pb-24 pt-12 pb-12 text-white">
+<div class="md:p-24 pt-12 pb-12 text-white">
   <div class="toast-container">
     <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
   </div>
@@ -87,14 +87,16 @@
           <h1 class="font-bold md:text-4xl text-lg text-cyan-300">
             We've got you covered.
           </h1>
-          <p>Contact us today for your cooling and heating needs.</p>
+          <p class="text-sm">
+            Contact us today for your cooling and heating needs.
+          </p>
           <p class="md:text-2xl font-bold pt-2 text-lg text-orange-500">
             (801)-668-2612
           </p>
         </div>
       </div>
-      <div class="">
-        <div class="text-center h-fit pt-8">
+      <div class="pt-16">
+        <div class="text-center h-fit">
           <h1
             class="md:text-2xl text-lg text-center font-bold pb-4 text-cyan-300"
           >

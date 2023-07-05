@@ -63,7 +63,7 @@
   };
 </script>
 
-<div class="md:p-24 md:pb-24 pt-12 pb-12 text-white">
+<div class="md:p-24 pt-12 pb-12 text-white">
   <div class="toast-container">
     <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
   </div>

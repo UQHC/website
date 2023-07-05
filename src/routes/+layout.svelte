@@ -8,7 +8,7 @@
 <div class="min-h-screen font-oswald bg-black">
   <slot />
   <footer
-    class="sm:sticky top-[100vh] foot-bg text-white py-6 min-h-fit font-bold bottom-0 w-full md:text-xl"
+    class="2xl:sticky sm:absolute top-[100vh] foot-bg text-white py-6 min-h-fit font-bold bottom-0 w-full md:text-xl"
     ss="foot-bg text-white py-6 min-h-fit font-bold bottom-0 w-full md:text-xl"
   >
     <div class="md:flex p-9 grid justify-center">

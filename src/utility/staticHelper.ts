@@ -2,6 +2,7 @@ export const Assets = {
   image: {
     arches: "assets/arches.jpg",
     area: "assets/selectedAreas.jpg",
+    backgroundImg: "assets/Background@2x.png"
   },
   icons: {
     temperature: "icons/icons8-temperature.svg",

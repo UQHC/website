@@ -1,5 +1,6 @@
 <script lang="ts">
-  import Card from "../components/simple/Card/Card.svelte";
+  //  import Card from "../components/simple/Card/Card.svelte";
+  import Carousel from "../components/complex/Carousel.svelte";
   import { Assets } from "../utility/staticHelper";
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import type {
@@ -8,9 +9,9 @@
   } from "./api/email/services/sendgrid/types";
   import { validateEmail } from "../utility/validators";
   import { success, warning } from "../utility/toast-theme";
-
   const { VITE_UQHC_EMAIL, VITE_SENDGRID_TEMPLATE_ID } = import.meta.env;
-  const { arches, area } = Assets.image;
+  const { backgroundImg } = Assets.image;
+  // TODO: Re-add these with the card component
   const { temperature, fan, tools, gears, colorLogoLg } = Assets.icons;
 
   let email: Email = {
@@ -62,7 +63,7 @@
   };
 </script>
 
-<div class="md:pt-24 md:pb-24 pt-12 pb-12 text-white">
+<div class="md:p-24 md:pb-24 pt-12 pb-12 text-white">
   <div class="toast-container">
     <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
   </div>
@@ -97,6 +98,7 @@
       </div>
       <div class="pt-16">
         <div class="text-center h-fit">
+          <div class="border-b border-white block sm:hidden m-8" />
           <h1
             class="md:text-2xl text-lg text-center font-bold pb-4 text-cyan-300"
           >
@@ -192,8 +194,46 @@
           </div>
         {/if}
       </div>
+      <div />
     </div>
   </div>
+</div>
+
+<div class="h-screen flex flex-col text-center items-center">
+  <div class=" w-screen absolute">
+    <div class=" md:p-20 p-10">
+      <h1 class="md:text-4xl text-2xl font-medium">
+        SERVING THE WASATCH FRONT REGION
+      </h1>
+      <div class="flex flex-wrap">
+        <p class="pt-6 city font-thin md:text-xl text-base">
+          Bountiful | Centerville | Clearfield | Clinton | Cottonwood Heights |
+          Draper | Farmington | Fruit Heights | Hill AFB | Holiday | Kaysville |
+          Layton | Midvale | Millcreek | Murray | North Salt Lake | Ogden |
+          Riverdale | Riverton | Roy | Salt Lake City | Sandy | South Jordan |
+          South Weber | Sunset | Syracuse | The Avenues | West Jordan | Woods
+          Cross
+        </p>
+      </div>
+      <Carousel />
+      <div class="inset-0 bottom-0">
+        <h1 class="md:text-4xl text-xl font-thin pt-6">
+          RELIABLE. QUALIFIED. DEPENDABLE. LICENSED. INSURED.
+        </h1>
+        <div class="flex justify-center md:pt-8 pt-6 md:space-x-8 space-x-4">
+          <img class="" src={temperature} />
+          <img class="" src={fan} />
+          <img src={tools} />
+          <img src={gears} />
+        </div>
+      </div>
+    </div>
+  </div>
+  <img
+    class="w-full h-full"
+    src={backgroundImg}
+    alt="Utah Quality Heating and Cooling"
+  />
 </div>
 
 <style>
@@ -203,5 +243,8 @@
     --toastContainerBottom: 20px;
     --toastContainerLeft: auto;
     --toastContainerPosition: fixed;
+  }
+  .city {
+    text-wrap: balance;
   }
 </style>

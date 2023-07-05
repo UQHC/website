@@ -40,6 +40,6 @@
     "@zerodevx/svelte-toast": "^0.9.4",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "svelte-preprocess": "^5.0.3"
+    "svelte-preprocess": "^5.0.3",
   }
 }

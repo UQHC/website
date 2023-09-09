@@ -96,7 +96,7 @@
           </p>
         </div>
       </div>
-      <div class="pt-16">
+      <div class="pt-6">
         <div class="text-center h-fit">
           <div class="border-b border-white block sm:hidden m-8" />
           <h1
@@ -199,14 +199,14 @@
   </div>
 </div>
 
-<div class="h-screen flex flex-col text-center items-center">
+<div class="relative h-screen location flex flex-col text-center items-center">
   <div class=" w-screen absolute">
     <div class=" md:p-20 p-10">
       <h1 class="md:text-4xl text-2xl font-medium">
         SERVING THE WASATCH FRONT REGION
       </h1>
       <div class="flex flex-wrap">
-        <p class="pt-6 city font-thin md:text-xl text-base">
+        <p class="top-0 pt-6 city font-thin md:text-xl text-base">
           Bountiful | Centerville | Clearfield | Clinton | Cottonwood Heights |
           Draper | Farmington | Fruit Heights | Hill AFB | Holiday | Kaysville |
           Layton | Midvale | Millcreek | Murray | North Salt Lake | Ogden |
@@ -216,7 +216,7 @@
         </p>
       </div>
       <Carousel />
-      <div class="inset-0 bottom-0">
+      <div class="bottom-0">
         <h1 class="md:text-4xl text-xl font-thin pt-6">
           RELIABLE. QUALIFIED. DEPENDABLE. LICENSED. INSURED.
         </h1>
@@ -237,6 +237,11 @@
 </div>
 
 <style>
+  @media (min-width: 345px) {
+    .location {
+      height: 850px;
+    }
+  }
   :root {
     --toastContainerTop: auto;
     --toastContainerRight: 5px;

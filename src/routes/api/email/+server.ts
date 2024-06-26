@@ -11,7 +11,7 @@ export const POST = (async ({ request }) => {
       throw new Error(errors.missingFields)
     }
     const mail = new SendGrid(emailRequest)
-    const response = await mail.sendEmail();
+    const response = await mail?.sendEmail();
 
     return json({
       response,

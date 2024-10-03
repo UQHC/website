@@ -106,7 +106,7 @@
           </h1>
         </div>
         {#if !emailSent}
-          <form class="max-w-xs mx-auto">
+          <form class="max-w-xs mx-auto text-black">
             <div class="mb-4 flex">
               <div class="w-1/2 mr-2">
                 <label

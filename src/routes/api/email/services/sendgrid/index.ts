@@ -1,22 +1,22 @@
-import type { EmailRequest } from './types';
-import sendgrid from '@sendgrid/mail';
-import dotenv from 'dotenv';
+import type { EmailRequest } from "./types";
+import sendgrid from "@sendgrid/mail";
+import dotenv from "dotenv";
 dotenv.config();
 
 export class SendGrid {
   message: EmailRequest;
-  env = process.env.ENV;
+  dev = process.env.DEV;
   Sendgrid: any;
-  SENDGRID_API_KEY = process.env.VITE_SENDGRID_API_KEY || '';
-  SENDGRID_API_URL = process.env.VITE_SENDGRID_API_URL || '';
+  SENDGRID_API_KEY = process.env.VITE_SENDGRID_API_KEY || "";
+  SENDGRID_API_URL = process.env.VITE_SENDGRID_API_URL || "";
 
   constructor(msg: EmailRequest) {
     this.message = msg;
 
-    if(this.env === 'dev') { 
-      this.Sendgrid = {} 
+    if (this.dev) {
+      this.Sendgrid = {};
 
-      return  
+      return;
     }
 
     this.Sendgrid = sendgrid.setApiKey(this.SENDGRID_API_KEY);
@@ -24,17 +24,16 @@ export class SendGrid {
 
   async sendEmail() {
     try {
-      const [response] = await this.Sendgrid.send(this.message);
+      const [response] = await this.Sendgrid?.send(this.message);
       const { statusCode } = response;
 
       if (statusCode === 202) {
-        console.log('Email sent successfully');
+        console.log("Email sent successfully");
       } else {
-        console.error('Error sending email:', response);
+        console.error("Error sending email:", response);
       }
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error("Error sending email:", error);
     }
   }
 }
-

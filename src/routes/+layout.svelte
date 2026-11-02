@@ -1,11 +1,40 @@
 <script lang="ts">
   import "../app.css";
   import { Assets } from "../utility/staticHelper";
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
 
   const { orangePegIcon, facebook, instagram, twitter } = Assets.icons;
-</script>
 
-<div class="min-h-screen font-oswald bg-black">
+  const versions = [
+    { path: "/", label: "v1" },
+    { path: "/v2", label: "v2 (new UI)" },
+  ];
+
+  const navigate = (event: Event) => {
+    const target = event.target as HTMLSelectElement;
+    const path = target.value;
+    if (path !== $page.url.pathname) {
+      goto(path);
+    }
+    target.value = $page.url.pathname;
+  };
+
+</script>
+<div class="min-h-screen font-oswald bg-black relative">
+  <div class="absolute top-4 right-4 z-50">
+    <select
+      aria-label="Version"
+      class="bg-black/70 text-white text-sm rounded-md border border-gray-600 px-2 py-1 focus:outline-none focus:ring focus:ring-cyan-300"
+      on:change={navigate}
+    >
+      {#each versions as version}
+        <option value={version.path} selected={$page.url.pathname === version.path}>
+          {version.label}
+        </option>
+      {/each}
+    </select>
+  </div>
   <slot />
   <footer
     class="2xl:sticky top-[100vh] foot-bg text-white py-6 min-h-fit font-bold bottom-0 w-full md:text-xl"

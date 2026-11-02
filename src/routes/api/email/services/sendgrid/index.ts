@@ -15,8 +15,10 @@ export class SendGrid {
     this.message = msg;
   }
 
-  async sendEmail(): Promise<number> {
+  async sendEmail(): Promise<void> {
     const [response] = await sendgrid.send(this.message);
-    return response.statusCode;
+    if (response.statusCode !== 202) {
+      throw new Error(`SendGrid returned ${response.statusCode}`);
+    }
   }
 }

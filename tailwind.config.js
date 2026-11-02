@@ -6,6 +6,13 @@ export default {
       fontFamily: {
         'oswald': ['Oswald', 'cursive']
       },
+      colors: {
+        'uqhc-orange': '#ff6427',
+        'footmaroon': '#660000',
+      },
+      aspectRatio: {
+        '9/10': '9 / 10',
+      },
     },
   },
   plugins: []

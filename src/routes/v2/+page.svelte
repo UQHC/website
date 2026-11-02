@@ -109,7 +109,7 @@
   class="min-h-screen bg-stone-50 font-oswald text-stone-900 transition-colors duration-500 dark:bg-neutral-950 dark:text-gray-100"
 >
   <!-- Header: hairline rule, generous spacing -->
-  <header class="border-b border-stone-200 dark:border-gray-800 bg-stone-50/95 backdrop-blur">
+  <header class="border-b border-stone-200 bg-stone-50/95 backdrop-blur dark:border-gray-800 dark:bg-neutral-950/95">
     <div class="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-10">
       <a href="/v2" class="flex items-center gap-4">
         <img class="h-10 w-10" src={colorLogoLg} alt="Utah Quality Heating and Cooling logo" />

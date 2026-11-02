@@ -97,7 +97,7 @@
   };
 
   const inputClass =
-    "mt-2 block w-full appearance-none border-b border-gray-300 bg-transparent px-0 py-2 text-base text-gray-900 placeholder-gray-400 focus:border-uqhc-orange focus:outline-none dark:border-gray-600 dark:text-gray-100";
+    "mt-2 block w-full appearance-none border-b border-stone-300 bg-transparent px-0 py-2 text-base text-stone-900 placeholder-stone-400 focus:border-uqhc-orange focus:outline-none dark:border-gray-600 dark:text-gray-100";
 </script>
 
 
@@ -106,14 +106,14 @@
 </div>
 
 <div
-  class="min-h-screen bg-white font-oswald text-gray-900 transition-colors duration-300 dark:bg-neutral-950 dark:text-gray-100"
+  class="min-h-screen bg-stone-50 font-oswald text-stone-900 transition-colors duration-500 dark:bg-neutral-950 dark:text-gray-100"
 >
   <!-- Header: hairline rule, generous spacing -->
-  <header class="border-b border-gray-200 dark:border-gray-800">
+  <header class="border-b border-stone-200 dark:border-gray-800 bg-stone-50/95 backdrop-blur">
     <div class="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-10">
       <a href="/v2" class="flex items-center gap-4">
         <img class="h-10 w-10" src={colorLogoLg} alt="Utah Quality Heating and Cooling logo" />
-        <span class="text-sm font-medium uppercase tracking-[0.2em]">
+        <span class="text-sm font-medium uppercase tracking-[0.2em] text-stone-800">
           Utah Quality <span class="text-uqhc-orange">Heating & Cooling</span>
         </span>
       </a>
@@ -121,7 +121,7 @@
       <div class="flex items-center gap-6">
         <select
           aria-label="Version"
-          class="cursor-pointer border-b border-gray-300 bg-transparent pb-0.5 text-xs uppercase tracking-widest text-gray-500 focus:outline-none dark:border-gray-700 dark:text-gray-400"
+          class="cursor-pointer border-b border-stone-300 bg-transparent pb-0.5 text-xs uppercase tracking-widest text-stone-500 focus:outline-none dark:border-gray-700 dark:text-gray-400"
           on:change={switchVersion}
         >
           <option value="">v2</option>
@@ -131,7 +131,7 @@
         <button
           on:click={toggleDark}
           aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-          class="flex h-9 w-9 items-center justify-center text-gray-500 transition hover:text-uqhc-orange dark:text-gray-400"
+          class="flex h-9 w-9 items-center justify-center text-stone-500 transition hover:text-uqhc-orange dark:text-gray-400"
         >
           {#if dark}
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -146,7 +146,7 @@
 
         <a
           href="tel:+18016682612"
-          class="border-b border-transparent pb-1 text-sm font-medium tracking-wider text-gray-700 transition hover:border-uqhc-orange hover:text-uqhc-orange dark:text-gray-300"
+          class="border-b border-transparent pb-1 text-sm font-medium tracking-wider text-stone-700 transition hover:border-uqhc-orange hover:text-uqhc-orange dark:text-gray-300"
         >
           (801) 668-2612
         </a>
@@ -161,24 +161,24 @@
     </p>
     <h1 class="mt-8 max-w-3xl text-5xl font-medium leading-[1.05] tracking-tight md:text-8xl">
       Comfort,<br />
-      <span class="text-gray-300 dark:text-gray-600">done right.</span>
+      <span class="text-stone-300 dark:text-gray-600">done right.</span>
     </h1>
 
     <div class="mt-16 grid gap-12 md:mt-24 md:grid-cols-2 md:gap-16">
-      <p class="max-w-md text-lg leading-relaxed text-gray-500 dark:text-gray-400">
+      <p class="max-w-md text-lg leading-relaxed text-stone-500 dark:text-gray-400">
         Repairs, installs, and tune-ups from Ogden to Draper. Upfront quotes,
         licensed technicians, and we show up when we say we will.
       </p>
       <div class="flex flex-wrap items-start gap-4 md:justify-end">
         <a
           href="#quote"
-          class="bg-uqhc-orange px-8 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white transition hover:bg-orange-500"
+          class="bg-uqhc-orange px-8 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white transition hover:brightness-110"
         >
           Get a Quote
         </a>
         <a
           href="tel:+18016682612"
-          class="border border-gray-300 px-8 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-gray-700 transition hover:border-uqhc-orange hover:text-uqhc-orange dark:border-gray-700 dark:text-gray-300"
+          class="border border-stone-300 px-8 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-stone-700 transition hover:border-uqhc-orange hover:text-uqhc-orange dark:border-gray-700 dark:text-gray-300"
         >
           Call Us
         </a>
@@ -187,27 +187,27 @@
   </section>
 
   <!-- Divider words, MDS-style section labels -->
-  <section class="border-t border-gray-200 dark:border-gray-800">
+  <section class="border-t border-stone-200 dark:border-gray-800">
     <div class="mx-auto max-w-6xl px-6 md:px-10">
       <div class="grid gap-10 py-16 md:grid-cols-3 md:py-24">
-        <div class="md:border-r md:border-gray-200 md:pr-10 md:dark:border-gray-800">
-          <p class="text-xs font-medium uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">01</p>
+        <div class="md:border-r md:border-stone-200 md:pr-10 md:dark:border-gray-800">
+          <p class="text-xs font-medium uppercase tracking-[0.3em] text-stone-400 dark:text-gray-500">01</p>
           <h3 class="mt-6 text-xl font-medium">Licensed & Insured</h3>
-          <p class="mt-4 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
+          <p class="mt-4 text-sm leading-relaxed text-stone-500 dark:text-gray-400">
             Certified technicians you can trust inside your home.
           </p>
         </div>
-        <div class="md:border-r md:border-gray-200 md:pr-10 md:dark:border-gray-800">
-          <p class="text-xs font-medium uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">02</p>
+        <div class="md:border-r md:border-stone-200 md:pr-10 md:dark:border-gray-800">
+          <p class="text-xs font-medium uppercase tracking-[0.3em] text-stone-400 dark:text-gray-500">02</p>
           <h3 class="mt-6 text-xl font-medium">Same-Day Service</h3>
-          <p class="mt-4 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
+          <p class="mt-4 text-sm leading-relaxed text-stone-500 dark:text-gray-400">
             Fast response across the Wasatch Front, seven days a week.
           </p>
         </div>
         <div>
-          <p class="text-xs font-medium uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">03</p>
+          <p class="text-xs font-medium uppercase tracking-[0.3em] text-stone-400 dark:text-gray-500">03</p>
           <h3 class="mt-6 text-xl font-medium">Upfront Pricing</h3>
-          <p class="mt-4 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
+          <p class="mt-4 text-sm leading-relaxed text-stone-500 dark:text-gray-400">
             Transparent written quotes. No surprise fees, ever.
           </p>
         </div>
@@ -219,13 +219,13 @@
   <section class="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-24">
     <div class="flex items-baseline justify-between">
       <h2 class="text-3xl font-medium tracking-tight md:text-5xl">Selected Work</h2>
-      <p class="hidden text-xs uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 sm:block">
+      <p class="hidden text-xs uppercase tracking-[0.3em] text-stone-400 dark:text-gray-500 sm:block">
         Real jobs — no stock photos
       </p>
     </div>
     <div class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
       {#each photos as photo, i}
-        <a href={photo.src} class="group block overflow-hidden bg-gray-100 dark:bg-neutral-900">
+        <a href={photo.src} class="group block overflow-hidden bg-stone-100 dark:bg-neutral-900">
           <img
             class="aspect-9/10 w-full object-cover grayscale-[20%] transition duration-500 group-hover:scale-102 group-hover:grayscale-0"
             src={photo.src}
@@ -239,7 +239,7 @@
   </section>
 
   <!-- Quote + service area -->
-  <section class="border-t border-gray-200 dark:border-gray-800">
+  <section class="border-t border-stone-200 dark:border-gray-800">
     <div class="mx-auto grid max-w-6xl gap-16 px-6 py-16 md:grid-cols-2 md:px-10 md:py-24">
       <!-- Form: underline inputs, minimal -->
       <div id="quote" class="scroll-mt-24">
@@ -248,24 +248,24 @@
           <form class="mt-10" on:submit={sendEmail}>
             <div class="grid grid-cols-2 gap-6">
               <div>
-                <label for="v2-first-name" class="text-xs font-medium uppercase tracking-widest text-gray-400 dark:text-gray-500">First</label>
+                <label for="v2-first-name" class="text-xs font-medium uppercase tracking-widest text-stone-400 dark:text-gray-500">First</label>
                 <input type="text" id="v2-first-name" bind:value={email.firstName} autocomplete="given-name" class={inputClass} />
               </div>
               <div>
-                <label for="v2-last-name" class="text-xs font-medium uppercase tracking-widest text-gray-400 dark:text-gray-500">Last</label>
+                <label for="v2-last-name" class="text-xs font-medium uppercase tracking-widest text-stone-400 dark:text-gray-500">Last</label>
                 <input type="text" id="v2-last-name" bind:value={email.lastName} autocomplete="family-name" class={inputClass} />
               </div>
             </div>
             <div class="mt-8">
-              <label for="v2-email" class="text-xs font-medium uppercase tracking-widest text-gray-400 dark:text-gray-500">Email</label>
+              <label for="v2-email" class="text-xs font-medium uppercase tracking-widest text-stone-400 dark:text-gray-500">Email</label>
               <input type="email" id="v2-email" bind:value={email.email} autocomplete="email" class={inputClass} />
             </div>
             <div class="mt-8">
-              <label for="v2-phone" class="text-xs font-medium uppercase tracking-widest text-gray-400 dark:text-gray-500">Phone</label>
+              <label for="v2-phone" class="text-xs font-medium uppercase tracking-widest text-stone-400 dark:text-gray-500">Phone</label>
               <input type="tel" id="v2-phone" bind:value={email.phone} autocomplete="tel" class={inputClass} />
             </div>
             <div class="mt-8">
-              <label for="v2-message" class="text-xs font-medium uppercase tracking-widest text-gray-400 dark:text-gray-500">Message</label>
+              <label for="v2-message" class="text-xs font-medium uppercase tracking-widest text-stone-400 dark:text-gray-500">Message</label>
               <textarea id="v2-message" rows="2" bind:value={email.message} class={inputClass} />
             </div>
             <button
@@ -279,10 +279,10 @@
         {:else}
           <div class="mt-10">
             <p class="text-xl font-medium">Thank you.</p>
-            <p class="mt-4 text-gray-500 dark:text-gray-400">We'll be in touch shortly.</p>
+            <p class="mt-4 text-stone-500 dark:text-gray-400">We'll be in touch shortly.</p>
             <button
               on:click={() => { emailSent = false; email = emptyEmail(); }}
-              class="mt-8 border-b border-gray-400 pb-1 text-sm uppercase tracking-widest text-gray-500 transition hover:border-uqhc-orange hover:text-uqhc-orange dark:text-gray-400"
+              class="mt-8 border-b border-stone-400 pb-1 text-sm uppercase tracking-widest text-stone-500 transition hover:border-uqhc-orange hover:text-uqhc-orange dark:text-gray-400"
             >
               Send Another
             </button>
@@ -293,12 +293,12 @@
       <!-- Service area -->
       <div>
         <h2 class="text-3xl font-medium tracking-tight md:text-5xl">Service Area</h2>
-        <p class="mt-6 max-w-sm text-sm leading-relaxed text-gray-500 dark:text-gray-400">
+        <p class="mt-6 max-w-sm text-sm leading-relaxed text-stone-500 dark:text-gray-400">
           Based in Ogden, serving the whole Wasatch Front.
         </p>
         <ul class="mt-10 grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3">
           {#each cities as city}
-            <li class="flex items-baseline gap-2 border-b border-gray-200 pb-2 text-sm text-gray-700 dark:border-gray-800 dark:text-gray-300">
+            <li class="flex items-baseline gap-2 border-b border-stone-200 pb-2 text-sm text-stone-700 dark:border-gray-800 dark:text-gray-300">
               <span class="h-1 w-1 shrink-0 translate-y-[-2px] bg-uqhc-orange"></span>
               {city}
             </li>
@@ -309,20 +309,20 @@
   </section>
 
   <!-- Footer: hairline, small caps, mono-spaced feel -->
-  <footer class="border-t border-gray-200 dark:border-gray-800">
+  <footer class="border-t border-stone-200 dark:border-gray-800">
     <div class="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-10 md:flex-row md:items-center md:justify-between md:px-10">
-      <p class="text-xs uppercase tracking-[0.25em] text-gray-400 dark:text-gray-500">
+      <p class="text-xs uppercase tracking-[0.25em] text-stone-400 dark:text-gray-500">
         Utah Quality Heating & Cooling
       </p>
-      <p class="text-xs uppercase tracking-[0.25em] text-gray-400 dark:text-gray-500">
+      <p class="text-xs uppercase tracking-[0.25em] text-stone-400 dark:text-gray-500">
         Reliable · Qualified · Dependable · Licensed · Insured
       </p>
-      <a href="tel:+18016682612" class="text-xs uppercase tracking-[0.25em] text-gray-500 transition hover:text-uqhc-orange dark:text-gray-400">
+      <a href="tel:+18016682612" class="text-xs uppercase tracking-[0.25em] text-stone-500 transition hover:text-uqhc-orange dark:text-gray-400">
         (801) 668-2612
       </a>
     </div>
-    <div class="border-t border-gray-200 dark:border-gray-800">
-      <p class="mx-auto max-w-6xl px-6 py-4 text-[10px] uppercase tracking-[0.2em] text-gray-300 dark:text-gray-600 md:px-10">
+    <div class="border-t border-stone-200 dark:border-gray-800">
+      <p class="mx-auto max-w-6xl px-6 py-4 text-[10px] uppercase tracking-[0.2em] text-stone-300 dark:text-gray-600 md:px-10">
         © 2023 Utah Quality Heating & Cooling — All rights reserved
       </p>
     </div>

@@ -8,7 +8,7 @@ export default {
         'oswald': ['Oswald', 'cursive']
       },
       colors: {
-        'uqhc-orange': '#ff6427',
+        'uqhc-orange': 'rgb(var(--uqhc-orange) / <alpha-value>)',
         'footmaroon': '#660000'
       },
       aspectRatio: {

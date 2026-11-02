@@ -2,3 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');
+
+/* Light: burnt orange for AA contrast on warm paper */
+:root {
+  --uqhc-orange: 217 74 26;
+}
+
+/* Dark: brighter brand orange for luminous accent */
+.dark {
+  --uqhc-orange: 255 100 39;
+}

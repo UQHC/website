@@ -22,20 +22,23 @@
 
 </script>
 <div class="min-h-screen font-oswald bg-black relative">
-  <div class="absolute top-4 right-4 z-50">
-    <select
-      aria-label="Version"
-      class="bg-black/70 text-white text-sm rounded-md border border-gray-600 px-2 py-1 focus:outline-none focus:ring focus:ring-cyan-300"
-      on:change={navigate}
-    >
-      {#each versions as version}
-        <option value={version.path} selected={$page.url.pathname === version.path}>
-          {version.label}
-        </option>
-      {/each}
-    </select>
-  </div>
+  {#if $page.url.pathname !== "/v2"}
+    <div class="absolute top-4 right-4 z-50">
+      <select
+        aria-label="Version"
+        class="bg-black/70 text-white text-sm rounded-md border border-gray-600 px-2 py-1 focus:outline-none focus:ring focus:ring-cyan-300"
+        on:change={navigate}
+      >
+        {#each versions as version}
+          <option value={version.path} selected={$page.url.pathname === version.path}>
+            {version.label}
+          </option>
+        {/each}
+      </select>
+    </div>
+  {/if}
   <slot />
+  {#if $page.url.pathname !== "/v2"}
   <footer
     class="2xl:sticky top-[100vh] foot-bg text-white py-6 min-h-fit font-bold bottom-0 w-full md:text-xl"
   >
@@ -101,6 +104,7 @@
       &COPY; 2023 UTAH QUALITY HEATING & COOLING. <br /> ALL RIGHTS RESERVED.
     </p>
   </footer>
+  {/if}
 </div>
 
 <style lang="postcss">

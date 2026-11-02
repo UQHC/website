@@ -1,12 +1,8 @@
 import type { EmailRequest } from "./types";
-
 import sendgrid from "@sendgrid/mail";
-import dotenv from "dotenv";
 
-dotenv.config();
-
-// Configure once at startup instead of per request.
-sendgrid.setApiKey(process.env.VITE_SENDGRID_API_KEY || "");
+// Configure once at module load time
+sendgrid.setApiKey(process.env.SENDGRID_API_KEY || "");
 
 export class SendGrid {
   message: EmailRequest;

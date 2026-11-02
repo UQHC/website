@@ -1,8 +1,7 @@
-<script>
-  export let imgSrc;
+<script lang="ts">
+  export let imgSrc: string;
   export let show = false;
   export let close = () => {};
-  console.log("img", imgSrc);
 </script>
 
 <div class={show ? "modal open " : "modal"} on:click={close}>

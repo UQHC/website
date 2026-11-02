@@ -1,5 +1,4 @@
 <script lang="ts">
-  //  import Card from "../components/simple/Card/Card.svelte";
   import Carousel from "../components/complex/Carousel.svelte";
   import { Assets } from "../utility/staticHelper";
   import { SvelteToast } from "@zerodevx/svelte-toast";
@@ -9,23 +8,32 @@
   } from "./api/email/services/sendgrid/types";
   import { validateEmail } from "../utility/validators";
   import { success, warning } from "../utility/toast-theme";
+
   const { VITE_UQHC_EMAIL, VITE_SENDGRID_TEMPLATE_ID } = import.meta.env;
   const { backgroundImg } = Assets.image;
-  // TODO: Re-add these with the card component
   const { temperature, fan, tools, gears, colorLogoLg } = Assets.icons;
 
-  let email: Email = {
+  const emptyEmail = (): Email => ({
     email: "",
     firstName: "",
     lastName: "",
     message: "",
     phone: "",
-  };
+  });
 
+  let email = emptyEmail();
   let emailSent = false;
-  const initialEmail = { ...email };
+  let sending = false;
 
-  const sendEmail = async () => {
+  const sendEmail = async (event: SubmitEvent) => {
+    event.preventDefault();
+    if (sending) return;
+
+    if (!validateEmail(email)) {
+      warning("Please fill in all fields with a valid phone number");
+      return;
+    }
+
     const emailRequest: EmailRequest = {
       to: VITE_UQHC_EMAIL as string,
       subject: "New Client Information",
@@ -36,29 +44,26 @@
       templateId: VITE_SENDGRID_TEMPLATE_ID as string,
     };
 
-    const isValidated = validateEmail(email);
-
-    if (isValidated) {
-      try {
-        const response = await fetch("/api/email", {
-          method: "POST",
-          body: JSON.stringify({ emailRequest }),
-          headers: {
-            "content-type": "application/json",
-          },
-        });
-        //TODO: show a toast that the request has been success
-        if (response.ok) {
-          success("Email sent successfully");
-          emailSent = true;
-          // TODO: Change the form to email sent with a button that says send again
-        }
-      } catch (err) {
-        //TODO: show a toast that the request has been error
+    sending = true;
+    try {
+      const response = await fetch("/api/email", {
+        method: "POST",
+        body: JSON.stringify({ emailRequest }),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      if (response.ok) {
+        success("Email sent successfully");
+        emailSent = true;
+      } else {
         warning("Error sending email");
-        console.log(err);
       }
-      //TODO: default don't send anything --- or missing field
+    } catch (err) {
+      warning("Error sending email");
+      console.log(err);
+    } finally {
+      sending = false;
     }
   };
 </script>
@@ -106,7 +111,7 @@
           </h1>
         </div>
         {#if !emailSent}
-          <form class="max-w-xs mx-auto text-black">
+          <form class="max-w-xs mx-auto text-black" on:submit={sendEmail}>
             <div class="mb-4 flex">
               <div class="w-1/2 mr-2">
                 <label
@@ -174,9 +179,9 @@
             </div>
             <div class="mb-4">
               <button
-                on:click={() => sendEmail()}
                 type="submit"
-                class="w-full flex justify-center py-2 px-4 bg-cyan-500 hover:bg-orange-400 focus:ring-orange-500 focus:ring-offset-orange-200 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200"
+                disabled={sending}
+                class="w-full flex justify-center py-2 px-4 bg-cyan-500 hover:bg-orange-400 focus:ring-orange-500 focus:ring-offset-orange-200 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200 disabled:opacity-50"
                 >Submit</button
               >
             </div>
@@ -186,7 +191,7 @@
             <button
               on:click={() => {
                 emailSent = false;
-                email = initialEmail;
+                email = emptyEmail();
               }}
               class="py-2 px-4 bg-gray-700 hover:bg-orange-400 focus:ring-orange-500 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200"
               >Send Again</button
@@ -221,10 +226,10 @@
           RELIABLE. QUALIFIED. DEPENDABLE. LICENSED. INSURED.
         </h1>
         <div class="flex justify-center md:pt-8 pt-6 md:space-x-8 space-x-4">
-          <img class="" src={temperature} />
-          <img class="" src={fan} />
-          <img src={tools} />
-          <img src={gears} />
+          <img class="h-12 w-12" src={temperature} alt="Temperature control" />
+          <img class="h-12 w-12" src={fan} alt="Fan installation" />
+          <img class="h-12 w-12" src={tools} alt="Professional tools" />
+          <img class="h-12 w-12" src={gears} alt="System maintenance" />
         </div>
       </div>
     </div>

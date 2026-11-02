@@ -9,7 +9,6 @@
   <slot />
   <footer
     class="2xl:sticky top-[100vh] foot-bg text-white py-6 min-h-fit font-bold bottom-0 w-full md:text-xl"
-    ss="foot-bg text-white py-6 min-h-fit font-bold bottom-0 w-full md:text-xl"
   >
     <div class="md:flex p-9 grid justify-center">
       <div class="md:w-1/2">

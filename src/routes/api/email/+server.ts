@@ -1,33 +1,20 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from '@sveltejs/kit';
 import { SendGrid } from './services/sendgrid/index';
-import { validateEmail } from '../../../utility/validators'
-export const POST = (async ({ request }) => {
+import { validateEmail } from '../../../utility/validators';
+
+export const POST: RequestHandler = async ({ request }) => {
   try {
-    const { emailRequest } = await request.json();
-    const { dynamicTemplateData: email } = emailRequest;
+    const { emailRequest } = await request.json().catch(() => ({}));
 
-    if (!validateEmail(email)) {
-      throw new Error(errors.missingFields)
+    if (!emailRequest || !validateEmail(emailRequest.dynamicTemplateData)) {
+      return json({ status: 'fail', error: 'Missing or invalid fields' }, { status: 400 });
     }
-    const mail = new SendGrid(emailRequest)
-    const response = await mail?.sendEmail();
 
-    return json({
-      response,
-      status: 'success',
-      code: 200
-    });
+    await new SendGrid(emailRequest).sendEmail();
+    return json({ status: 'success' }, { status: 200 });
   } catch (err) {
-    //TODO: figure out what status code to return in the json
-    return json({
-      response: err,
-      status: "fail",
-      code: 401
-    })
+    console.error('Error sending email:', err);
+    return json({ status: 'fail', error: 'Failed to send email' }, { status: 500 });
   }
-}) satisfies RequestHandler;
-
-const errors = {
-  missingFields: "Missing Fields"
-}
+};

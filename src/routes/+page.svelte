@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Card from "../components/simple/Card/Card.svelte";
+  import Carousel from "../components/complex/Carousel.svelte";
   import { Assets } from "../utility/staticHelper";
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import type {
@@ -10,21 +10,30 @@
   import { success, warning } from "../utility/toast-theme";
 
   const { VITE_UQHC_EMAIL, VITE_SENDGRID_TEMPLATE_ID } = import.meta.env;
-  const { arches, area } = Assets.image;
-  const { temperature, fan, tools, gears } = Assets.icons;
+  const { backgroundImg } = Assets.image;
+  const { temperature, fan, tools, gears, colorLogoLg } = Assets.icons;
 
-  let email: Email = {
+  const emptyEmail = (): Email => ({
     email: "",
     firstName: "",
     lastName: "",
     message: "",
     phone: "",
-  };
+  });
 
+  let email = emptyEmail();
   let emailSent = false;
-  const initialEmail = { ...email };
+  let sending = false;
 
-  const sendEmail = async () => {
+  const sendEmail = async (event: SubmitEvent) => {
+    event.preventDefault();
+    if (sending) return;
+
+    if (!validateEmail(email)) {
+      warning("Please fill in all fields with a valid phone number");
+      return;
+    }
+
     const emailRequest: EmailRequest = {
       to: VITE_UQHC_EMAIL as string,
       subject: "New Client Information",
@@ -35,197 +44,217 @@
       templateId: VITE_SENDGRID_TEMPLATE_ID as string,
     };
 
-    const isValidated = validateEmail(email);
-
-    if (isValidated) {
-      try {
-        const response = await fetch("/api/email", {
-          method: "POST",
-          body: JSON.stringify({ emailRequest }),
-          headers: {
-            "content-type": "application/json",
-          },
-        });
-        //TODO: show a toast that the request has been success
-        if (response.ok) {
-          success("Email sent successfully");
-          emailSent = true;
-          // TODO: Change the form to email sent with a button that says send again
-        }
-      } catch (err) {
-        //TODO: show a toast that the request has been error
+    sending = true;
+    try {
+      const response = await fetch("/api/email", {
+        method: "POST",
+        body: JSON.stringify({ emailRequest }),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      if (response.ok) {
+        success("Email sent successfully");
+        emailSent = true;
+      } else {
         warning("Error sending email");
-        console.log(err);
       }
-      //TODO: default don't send anything --- or missing field
+    } catch (err) {
+      warning("Error sending email");
+      console.log(err);
+    } finally {
+      sending = false;
     }
   };
 </script>
 
-<div class="min-h-screen bg-slate-700">
-  <div class="relative">
-    <div class="toast-container">
-      <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
-    </div>
-    <img
-      src={arches}
-      class="w-full object-cover h-screen md:h-full"
-      alt="Utah Arches Image"
-    />
-    <div
-      class="absolute top-0 left-0 w-full h-full bg-slate-300 opacity-50 z-10"
-    />
-    <div class="absolute top-0 left-0 w-full h-full z-20">
-      <!-- section -->
-      <div class="p-4 md:p-24">
-        <div class="w-full md:w-1/2 space-y-2">
-          <h1 class="font-bold text-gray-900 text-4xl md:text-8xl">
-            Utah Quality Heating & Cooling
-          </h1>
-          <p class="text-lg md:text-xl my-2">UQHC HVAC has you covered.</p>
-          <ul class="font-bold text-lg md:text-xl">
-            <li>- Reliable.</li>
-            <li>- Qualified.</li>
-            <li>- Dependable.</li>
-            <li>- Licensed .</li>
-            <li>- Insured.</li>
-          </ul>
-        </div>
-        <div
-          class="w-full md:w-1/2 md:mx-auto grid justify-center pt-12 md:pt-40"
-        >
-          <h1
-            class="text-center font-bold text-gray-900 text-3xl md:text-5xl pb-10"
-          >
-            Repair & Installation
-          </h1>
+<div class="md:p-24 pt-12 pb-12 text-white">
+  <div class="toast-container">
+    <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
+  </div>
+  <div>
+    <div class="md:grid md:grid-cols-2">
+      <div class="grid justify-center">
+        <div class="flex">
+          <img
+            class="h-24 w-24 md:h-60 md:w-60"
+            src={colorLogoLg}
+            alt="utah quality penguin logo"
+          />
           <div
-            class="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:flex items-center justify-center"
+            class="flex md:items-center font-oswald relative bottom-6 right-3 md:right-16"
           >
-            <Card text={"Ventalation"} icon={fan} />
-            <Card text={"Expert Installion"} icon={gears} />
-            <Card text={"Inspection & Repairs"} icon={tools} />
-            <Card text={"Temperature Control"} icon={temperature} />
+            <h1 class="md:text-5xl pt-12 text-2xl leading-normal">
+              <span class="font-bold">UTAH QUALITY </span> <br /> HEATING & COOLING
+            </h1>
           </div>
         </div>
+        <div class="md:pt-6 md:pt-2 md:space-y-2">
+          <h1 class="font-bold md:text-4xl text-lg text-cyan-300">
+            We've got you covered.
+          </h1>
+          <p class="text-sm">
+            Contact us today for your cooling and heating needs.
+          </p>
+          <p class="md:text-2xl font-bold pt-2 text-lg text-orange-500">
+            (801)-668-2612
+          </p>
+        </div>
       </div>
+      <div class="pt-6">
+        <div class="text-center h-fit">
+          <div class="border-b border-white block sm:hidden m-8" />
+          <h1
+            class="md:text-2xl text-lg text-center font-bold pb-4 text-cyan-300"
+          >
+            REQUEST A QUOTE/ LET'S TALK
+          </h1>
+        </div>
+        {#if !emailSent}
+          <form class="max-w-xs mx-auto text-black" on:submit={sendEmail}>
+            <div class="mb-4 flex">
+              <div class="w-1/2 mr-2">
+                <label
+                  for="first-name"
+                  class=" block text-sm font-medium text-white"
+                  >First Name</label
+                >
+                <input
+                  type="text"
+                  id="first-name"
+                  bind:value={email.firstName}
+                  name="first-name"
+                  class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
+                />
+              </div>
+              <div class="w-1/2 ml-2">
+                <label
+                  for="last-name"
+                  class="block text-sm font-medium text-white">Last Name</label
+                >
+                <input
+                  type="text"
+                  bind:value={email.lastName}
+                  id="last-name"
+                  name="last-name"
+                  class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
+                />
+              </div>
+            </div>
+            <div class="mb-4">
+              <label for="email" class="block text-sm font-medium text-white"
+                >Email</label
+              >
+              <input
+                type="email"
+                bind:value={email.email}
+                id="email"
+                name="email"
+                class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="phone" class="block text-sm font-medium text-white"
+                >Phone Number</label
+              >
+              <input
+                type="tel"
+                bind:value={email.phone}
+                id="phone"
+                name="phone"
+                class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="message" class="block text-sm font-medium text-white"
+                >Message</label
+              >
+              <textarea
+                id="message"
+                bind:value={email.message}
+                name="message"
+                rows="4"
+                class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
+              />
+            </div>
+            <div class="mb-4">
+              <button
+                type="submit"
+                disabled={sending}
+                class="w-full flex justify-center py-2 px-4 bg-cyan-500 hover:bg-orange-400 focus:ring-orange-500 focus:ring-offset-orange-200 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200 disabled:opacity-50"
+                >Submit</button
+              >
+            </div>
+          </form>
+        {:else}
+          <div class="pt-6 flex justify-center h-fit">
+            <button
+              on:click={() => {
+                emailSent = false;
+                email = emptyEmail();
+              }}
+              class="py-2 px-4 bg-gray-700 hover:bg-orange-400 focus:ring-orange-500 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200"
+              >Send Again</button
+            >
+          </div>
+        {/if}
+      </div>
+      <div />
     </div>
   </div>
-  <div
-    id="contact-section"
-    class="bg-white md:min-h-screen flex flex-col md:flex-row"
-  >
-    <div
-      class="w-full md:w-1/2 px-4 py-8 md:py-16 flex flex-col justify-center items-center"
-    >
-      <div class="mb-5 text-center">
-        <h1 class="text-2xl font-bold mb-">Contact Us</h1>
-        <p class="text-gray-500 mb-6 text-center">
-          We are ready to work for you
+</div>
+
+<div class="relative h-screen location flex flex-col text-center items-center">
+  <div class=" w-screen absolute">
+    <div class=" md:p-20 p-10">
+      <h1 class="md:text-4xl text-2xl font-medium">
+        SERVING THE WASATCH FRONT REGION
+      </h1>
+      <div class="flex flex-wrap">
+        <p class="top-0 pt-6 city font-thin md:text-xl text-base">
+          Bountiful | Centerville | Clearfield | Clinton | Cottonwood Heights |
+          Draper | Farmington | Fruit Heights | Hill AFB | Holiday | Kaysville |
+          Layton | Midvale | Millcreek | Murray | North Salt Lake | Ogden |
+          Riverdale | Riverton | Roy | Salt Lake City | Sandy | South Jordan |
+          South Weber | Sunset | Syracuse | The Avenues | West Jordan | Woods
+          Cross
         </p>
       </div>
-      {#if !emailSent}
-        <form class="max-w-md mx-auto">
-          <div class="mb-4 flex">
-            <div class="w-1/2 mr-2">
-              <label
-                for="first-name"
-                class=" block text-sm font-medium text-gray-700"
-                >First Name</label
-              >
-              <input
-                type="text"
-                id="first-name"
-                bind:value={email.firstName}
-                name="first-name"
-                class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
-              />
-            </div>
-            <div class="w-1/2 ml-2">
-              <label
-                for="last-name"
-                class="block text-sm font-medium text-gray-700">Last Name</label
-              >
-              <input
-                type="text"
-                bind:value={email.lastName}
-                id="last-name"
-                name="last-name"
-                class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
-              />
-            </div>
-          </div>
-          <div class="mb-4">
-            <label for="email" class="block text-sm font-medium text-gray-700"
-              >Email</label
-            >
-            <input
-              type="email"
-              bind:value={email.email}
-              id="email"
-              name="email"
-              class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="phone" class="block text-sm font-medium text-gray-700"
-              >Phone Number</label
-            >
-            <input
-              type="tel"
-              bind:value={email.phone}
-              id="phone"
-              name="phone"
-              class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="message" class="block text-sm font-medium text-gray-700"
-              >Message</label
-            >
-            <textarea
-              id="message"
-              bind:value={email.message}
-              name="message"
-              rows="4"
-              class="focus:outline-none focus:ring focus:ring-orange-300 mt-1 p-2 focus:border-0 border-gray-100 form-outline block w-full shadow-sm sm:text-sm border-2 rounded-md"
-            />
-          </div>
-          <div class="mb-4">
-            <button
-              on:click={() => sendEmail()}
-              type="submit"
-              class="w-full flex justify-center py-2 px-4 bg-gray-700 hover:bg-orange-400 focus:ring-orange-500 focus:ring-offset-orange-200 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200"
-              >Submit</button
-            >
-          </div>
-        </form>
-      {:else}
-        <button
-          on:click={() => {
-            emailSent = false;
-            email = initialEmail;
-          }}
-          class="grid justify-center py-2 px-4 bg-gray-700 hover:bg-orange-400 focus:ring-orange-500 focus:ring-offset-orange-200 text-white text-sm font-medium shadow-sm rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-orange-200"
-          >Send Again</button
-        >
-      {/if}
+      <Carousel />
+      <div class="bottom-0">
+        <h1 class="md:text-4xl text-xl font-thin pt-6">
+          RELIABLE. QUALIFIED. DEPENDABLE. LICENSED. INSURED.
+        </h1>
+        <div class="flex justify-center md:pt-8 pt-6 md:space-x-8 space-x-4">
+          <img class="h-12 w-12" src={temperature} alt="Temperature control" />
+          <img class="h-12 w-12" src={fan} alt="Fan installation" />
+          <img class="h-12 w-12" src={tools} alt="Professional tools" />
+          <img class="h-12 w-12" src={gears} alt="System maintenance" />
+        </div>
+      </div>
     </div>
-
-    <div
-      class="w-full md:w-1/2 bg-cover bg-center"
-      style="background-image: url({area});"
-    />
   </div>
-  <div />
+  <img
+    class="w-full h-full"
+    src={backgroundImg}
+    alt="Utah Quality Heating and Cooling"
+  />
 </div>
 
 <style>
+  @media (min-width: 345px) {
+    .location {
+      height: 850px;
+    }
+  }
   :root {
     --toastContainerTop: auto;
     --toastContainerRight: 5px;
     --toastContainerBottom: 20px;
     --toastContainerLeft: auto;
     --toastContainerPosition: fixed;
+  }
+  .city {
+    text-wrap: balance;
   }
 </style>

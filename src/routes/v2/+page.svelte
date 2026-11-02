@@ -296,11 +296,14 @@
         <p class="mt-6 max-w-sm text-sm leading-relaxed text-gray-500 dark:text-gray-400">
           Based in Ogden, serving the whole Wasatch Front.
         </p>
-        <p class="mt-8 text-sm leading-loose text-gray-600 dark:text-gray-300 md:columns-2 md:gap-8">
-          {#each cities as city, i}
-            {city}{i < cities.length - 1 ? "," : ""}
+        <ul class="mt-10 grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3">
+          {#each cities as city}
+            <li class="flex items-baseline gap-2 border-b border-gray-200 pb-2 text-sm text-gray-700 dark:border-gray-800 dark:text-gray-300">
+              <span class="h-1 w-1 shrink-0 translate-y-[-2px] bg-uqhc-orange"></span>
+              {city}
+            </li>
           {/each}
-        </p>
+        </ul>
       </div>
     </div>
   </section>

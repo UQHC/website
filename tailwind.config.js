@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -8,12 +9,12 @@ export default {
       },
       colors: {
         'uqhc-orange': '#ff6427',
-        'footmaroon': '#660000',
+        'footmaroon': '#660000'
       },
       aspectRatio: {
-        '9/10': '9 / 10',
-      },
-    },
+        '9/10': '9 / 10'
+      }
+    }
   },
   plugins: []
 };

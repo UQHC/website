@@ -5,6 +5,9 @@ on:
     workflows: [CI]
     types: [completed]
 
+permissions:
+  deployments: write
+
 jobs:
   deploy:
     if: |
